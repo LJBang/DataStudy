@@ -13,24 +13,112 @@
 텐서플로는 없으니까 사이킷런, 넘파이, pd 정도 +matplotlib?  
 
 ---
-함수 정리  
+**함수 정리**  
+전처리 중에서 할 수 있는건 함수를 안써도 됨!  
+`df.fillna(0)` 같은 것들  
 
 ### 데이터 전처리
 - 표준화  
+```python
+
+
+```  
+
 - 정규화  
+```python
+
+
+```  
+
 - imputation  
+```python
+
+
+```    
+
 - encoding  
+```python
+
+
+```   
 
 ### 분류
 - 로지스틱 회귀  
+```python
+from sklearn.linear_model import LogisticRegression
+
+lr = LogisticRegression()
+lr.fit(X_train, y_train)
+```  
+
 - 결정트리 -> 랜덤 포레스트  
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(n_estimators = '나무개수', max_depth = '깊이', random_state = '랜덤시드')
+rf.fit(X_train, y_train)
+```  
+
+- 나이브 베이지안
+```python
+
+
+```  
 
 ### 클러스터링
 - K-means  
+```python
+
+
+```  
 
 ### 회귀
 - 릿지 회귀  
+```python
+from sklearn.linear_model import Ridge
+rid = Ridge(alpha=.5)
+rid.fit(X_train, y_train)
+
+rid.coef_ # X의 class별 coef
+rid.intercept_ # 절편
+```  
+
 - 라쏘 회귀  
+```python
+from sklearn.linear_model import Lasso
+las = Lasso(alpha=.5)
+las.fit(X_train, y_train)
+
+las.coef_ # X의 class별 coef
+las.intercept_ # 절편
+```  
 
 ### 앙상블  
 - 배깅  
+```python
+
+
+```  
+
+### AUC평가  
+```python
+from sklearn.metrics import roc_auc_score
+'''
+ 모델 학습 
+'''
+print("ROCAUC Score:", roc_auc_score(y_train,pd.DataFrame(model.predict_proba(X_train))))
+```  
+
+### 예측 및 마무리
+```python
+# 그냥 예측
+y_pred = model.predict(X_test)
+# 확률형으로 예측 (예제)
+y_pred = model.predict_proba(X_test)
+
+# 예측 결과 df로
+y_pred = pd.DataFrame(y_pred)
+
+# 예측 결과 csv 형태로 제출
+y_pred.to_csv(y_test_path, index = False)
+```
