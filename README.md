@@ -1,5 +1,5 @@
-# HDC_DataStudy
-해데센 스터디를 한번 정리해 봅시다.
+# DataStudy
+데이터 공부를 해봅시다.  
 
 [로지스틱회귀](./Dict/4_Logistic.ipynb)
 
@@ -9,3 +9,5 @@
 [1-16](./std_pd/1_16.ipynb)
 [17-23](./std_pd/17_23.ipynb)
 [24-33](./std_pd/24_33.ipynb)
+
+### [빅분기 실기 준비](big_data.md)
