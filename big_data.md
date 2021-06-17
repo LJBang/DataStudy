@@ -18,16 +18,34 @@
 `df.fillna(0)` 같은 것들  
 
 ### 데이터 전처리
-- 표준화  
+fit -> transfrom 과정을 거침  
+보통은 train set에서 scaler를 먼저 fit 하고  
+train, test set 모두에 transform을 적용  
+
+라벨인코딩의 경우 OOV문제가 발생할 수 있기 때문에  
+train, test를 합쳐서 fit한 후에 각각의 데이터에 transform하는 것이 좋아보임.  
+
+`fit_transform()`함수는 fit과 transform을 한번에 순서대로 진행  
+OR
 ```python
+scaler.fit(X_train)
+scaler.transform(X_train)
+scaler.transform(y_train)
+```  
+위와 같은 방법으로 해도 된다.  
 
+- Standard Scaler  
+```python
+from sklearn.preprocessing import StandardScaler
 
+scaler = StandardScaler()
 ```  
 
-- 정규화  
+- MinMaxScaler  
 ```python
+from sklearn.preprocessing import MinMaxScaler
 
-
+scaler = MinMaxScaler()
 ```  
 
 - imputation  
@@ -36,10 +54,11 @@
 
 ```    
 
-- encoding  
+- Label Encoding  
 ```python
+from sklearn.preprocessing import LabelEncoder
 
-
+X_train.loc[:,['주구매상품','주구매지점']] = X_train.loc[:,['주구매상품','주구매지점']].apply(LabelEncoder().fit())
 ```   
 
 ### 분류
@@ -59,10 +78,12 @@ rf = RandomForestClassifier(n_estimators = '나무개수', max_depth = '깊이',
 rf.fit(X_train, y_train)
 ```  
 
-- 나이브 베이지안
+- MLP
 ```python
+from sklearn.neural_network import MLPClassifier
 
-
+mlp = MLPClassifier(hidden_layer_sizes = (10, ), solver = 'adam', activation = 'relu', learning_rate_init = 0.001, max_iter =500)
+mlp.fit(X_train, y_train)
 ```  
 
 ### 클러스터링
@@ -104,9 +125,9 @@ las.intercept_ # 절편
 ```python
 from sklearn.metrics import roc_auc_score
 '''
- 모델 학습 
+ 모델 학습 구간
 '''
-print("ROCAUC Score:", roc_auc_score(y_train,pd.DataFrame(model.predict_proba(X_train))))
+print("ROCAUC Score:", roc_auc_score(y_train,pd.DataFrame(model.predict_proba(X_train)).iloc[:,1]))
 ```  
 
 ### 예측 및 마무리
